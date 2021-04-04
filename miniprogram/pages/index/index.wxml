@@ -1,0 +1,62 @@
+<!--index.wxml-->
+<view class="container">
+
+  <!-- 用户 openid -->
+  <view class="userinfo">
+    <block wx:if="{{!hasUserInfo}}">
+      <button type="primary" bindtap="getUserProfile"> 点击获取头像昵称 </button>
+    </block>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+  <view>
+    <block wx:if="{{hasUserInfo}}">
+      <button type="primary" plain="true" class="main-bt" bindtap="onScanQRCode">
+        <view>
+          <mp-icon icon="qr-code" color="green" size="{{100}}"></mp-icon>
+        </view>
+        <view>打卡点扫码</view>
+      </button>
+    </block>
+    <block wx:else>
+      <view class="main-bt">请点击上方按钮获取头像和昵称</view>
+    </block>
+  </view>
+
+
+  <view class="page__bd">
+    <mp-cells title="请扫码后完成以下任务">
+      <mp-cell link hover url="../answer/answer">
+        <view style="display: inline-block; vertical-align: middle">
+          <mp-icon icon="done2" color="green" size="{{20}}"></mp-icon>
+          打卡点 A
+        </view>
+        <mp-badge style="margin-left: 10px;" content="已完成" />
+      </mp-cell>
+      <mp-cell link>
+        <view style="display: inline-block; vertical-align: middle">
+          <mp-icon icon="done" color="green" size="{{20}}"></mp-icon>
+          打卡点 B
+        </view>
+        <mp-badge style="margin-left: 10px;" content="需答题" />
+      </mp-cell>
+      <mp-cell link>
+        <view style="display: inline-block; vertical-align: middle">
+          <mp-icon icon="close" color="red" size="{{20}}"></mp-icon>
+          打卡点 C
+        </view>
+        <mp-badge style="margin-left: 10px;" content="未开启" />
+      </mp-cell>
+    </mp-cells>
+  </view>
+
+
+  <!-- 操作数据库 -->
+  <view class="uploader">
+    <navigator url="../answer/answer" open-type="navigate" class="uploader-text">
+      <text>查看汇总</text>
+    </navigator>
+  </view>
+</view>
