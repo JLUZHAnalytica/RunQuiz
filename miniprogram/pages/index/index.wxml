@@ -8,7 +8,7 @@
     </block>
     <block wx:else>
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+      <text class="userinfo-nickname">{{username}}</text>
     </block>
   </view>
   <view>

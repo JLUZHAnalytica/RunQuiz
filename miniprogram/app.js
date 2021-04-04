@@ -15,10 +15,10 @@ App({
     }
 
     this.globalData = {
-      avatarUrl: './user-unlogin.png',
-      nickName: 'Yokey 筱',
-      hasUserInfo: true,
-      openid: 'oaqP65SeHpQgT1H75oxGDjUL3Rwg',
+      // avatarUrl: './user-unlogin.png',
+      // nickName: 'Yokey 筱',
+      // hasUserInfo: true,
+      // openid: 'oaqP65SeHpQgT1H75oxGDjUL3Rwg',
     }
   },
 })
