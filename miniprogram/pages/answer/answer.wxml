@@ -8,7 +8,7 @@
     </view>
     <view class="list-item">
       <text class="request-text" wx:for="{{10}}"
-        style="color: {{step === index + 1 ? 'red': 'black'}}">{{index + 1}}</text>
+        style="color: {{step === index + 1 ? 'orange': 'black'}}">{{index + 1}}</text>
     </view>
     <view class="list-item" wx:if="{{nickName}}">
       <text class="request-text">{{nickName}}</text>
@@ -33,18 +33,9 @@
   </view>
 
 
-
-  <view class="guide" wx:if="{{step === 1}}">
+  <view class="guide">
     <div class="nav">
-      <button class="next" size="mini" type="default" bindtap="nextStep">下一步</button>
-    </div>
-  </view>
-
-
-  <view class="guide" wx:if="{{step >= 2}}">
-    <div class="nav">
-      <button class="prev" size="mini" type="default" bindtap="prevStep">上一步</button>
-      <button class="next" size="mini" type="default" bindtap="nextStep">下一步</button>
+      <button class="next" size="mini" type="default" bindtap="nextStep" disabled='{{ !finished }}'>下一题</button>
     </div>
   </view>
 </view>

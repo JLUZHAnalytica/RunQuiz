@@ -11,6 +11,7 @@ Page({
     count: null,
     queryResult: '',
     nickName: '',
+    finished: false,
 
     formData: {},
     quiz: {
@@ -70,6 +71,10 @@ Page({
 
   submitForm() {
     console.log(this.data.formData)
+    this.setData({
+      finished: true
+    })
+    console.log(this.data.finished)
   },
 
   radioChange: function (e) {
@@ -91,8 +96,9 @@ Page({
     // 在第一步，需检查是否有 openid，如无需获取
     
       this.setData({
+        finished: false,
         step: this.data.step + 1
-      }, callback)
+      })
     
   },
 
