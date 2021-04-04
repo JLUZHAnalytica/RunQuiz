@@ -8,7 +8,7 @@
     </block>
     <block wx:else>
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{username}}</text>
+      <text class="userinfo-nickname">{{nickName}}</text>
     </block>
   </view>
   <view>
@@ -28,10 +28,10 @@
 
   <view class="page__bd">
     <mp-cells title="请扫码后完成以下任务">
-      <mp-cell link hover url="../answer/answer">
+      <mp-cell link hover url="../answer/answer" wx:for="{{[1, 2]}}" wx:for-item="i">
         <view style="display: inline-block; vertical-align: middle">
           <mp-icon icon="done2" color="green" size="{{20}}"></mp-icon>
-          打卡点 A
+          打卡点 {{i}}
         </view>
         <mp-badge style="margin-left: 10px;" content="已完成" />
       </mp-cell>

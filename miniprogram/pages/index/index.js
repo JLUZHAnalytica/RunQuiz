@@ -3,8 +3,8 @@ const app = getApp()
 
 Page({
   data: {
-    avatarUrl:"",
-    username: "",
+    avatarUrl:"",//存头像
+    nickName: "",//存用户名
     takeSession: false,
     requestResult: '',
     hasUserInfo: false,
@@ -12,11 +12,11 @@ Page({
 
   onLoad: function() {
 
-      let username = wx.getStorageSync('username'),
+      let nickName = wx.getStorageSync('nickName'),
         avater = wx.getStorageSync('avatarUrl');
-      if(username){
+      if(nickName){
         this.setData({
-          username: username,
+          nickName: nickName,
           avatarUrl: avater,
           hasUserInfo: true,
         })
@@ -53,11 +53,11 @@ Page({
       success: (res) => {
         this.setData({
           avatarUrl: res.userInfo.avatarUrl,
-          username: res.userInfo.nickName,
+          nickName: res.userInfo.nickName,
           hasUserInfo: true,
         })
         wx.setStorageSync('avatarUrl', res.userInfo.avatarUrl)
-        wx.setStorageSync('username', res.userInfo.nickName)
+        wx.setStorageSync('nickName', res.userInfo.nickName)
         // app.globalData.avatarUrl=res.userInfo.avatarUrl
         // app.globalData.nickName=res.userInfo.nickName
         // app.globalData.hasUserInfo=true
