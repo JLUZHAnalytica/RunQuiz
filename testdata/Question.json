@@ -1,0 +1,255 @@
+[
+    {
+        "text": "以下语言原生支持多线程的是",
+        "ans": 2,
+        "ismulti": false,
+        "items": [
+            {
+                "name": "Java",
+                "value": 0
+            },
+            {
+                "name": "C++",
+                "value": 1
+            },
+            {
+                "name": "Go",
+                "value": 2
+            },
+            {
+                "name": "Python",
+                "value": 3
+            }
+        ]
+    },
+    {
+        "text": "截止2021年的iPad系列机型中刷新率最高的是多少",
+        "ans": 2,
+        "ismulti": false,
+        "items": [
+            {
+                "name": "30 Hz",
+                "value": 0
+            },
+            {
+                "name": "50Hz",
+                "value": 1
+            },
+            {
+                "name": "60Hz",
+                "value": 2
+            },
+            {
+                "name": "120Hz",
+                "value": 3
+            }
+        ]
+    },
+    {
+        "text": "苹果自家的 M1 芯片采用的架构类型是什么",
+        "ans": 3,
+        "ismulti": false,
+        "items": [
+            {
+                "name": "x86_64",
+                "value": 0
+            },
+            {
+                "name": "amd64",
+                "value": 1
+            },
+            {
+                "name": "amd32",
+                "value": 2
+            },
+            {
+                "name": "arm64",
+                "value": 3
+            },
+            {
+                "name": "arm32",
+                "value": 4
+            },
+            {
+                "name": "i386",
+                "value": 5
+            }
+        ]
+    },
+    {
+        "text": "最贵的 Mac Pro 类型是什么",
+        "ans": 0,
+        "ismulti": false,
+        "items": [
+            {
+                "name": "机架式",
+                "value": 0
+            },
+            {
+                "name": "塔式",
+                "value": 1
+            }
+        ]
+    },
+    {
+        "text": "以下语言原生支持多线程的是",
+        "ans": 2,
+        "ismulti": false,
+        "items": [
+            {
+                "name": "Java",
+                "value": 0
+            },
+            {
+                "name": "C++",
+                "value": 1
+            },
+            {
+                "name": "Go",
+                "value": 2
+            },
+            {
+                "name": "Python",
+                "value": 3
+            }
+        ]
+    },
+    {
+        "text": "以下语言原生支持多线程的是",
+        "ans": 2,
+        "ismulti": false,
+        "items": [
+            {
+                "name": "Java",
+                "value": 0
+            },
+            {
+                "name": "C++",
+                "value": 1
+            },
+            {
+                "name": "Go",
+                "value": 2
+            },
+            {
+                "name": "Python",
+                "value": 3
+            }
+        ]
+    },
+    {
+        "text": "以下语言原生支持多线程的是",
+        "ans": 2,
+        "ismulti": false,
+        "items": [
+            {
+                "name": "Java",
+                "value": 0
+            },
+            {
+                "name": "C++",
+                "value": 1
+            },
+            {
+                "name": "Go",
+                "value": 2
+            },
+            {
+                "name": "Python",
+                "value": 3
+            }
+        ]
+    },
+    {
+        "text": "以下语言原生支持多线程的是",
+        "ans": 2,
+        "ismulti": false,
+        "items": [
+            {
+                "name": "Java",
+                "value": 0
+            },
+            {
+                "name": "C++",
+                "value": 1
+            },
+            {
+                "name": "Go",
+                "value": 2
+            },
+            {
+                "name": "Python",
+                "value": 3
+            }
+        ]
+    },
+    {
+        "text": "以下语言原生支持多线程的是",
+        "ans": 2,
+        "ismulti": false,
+        "items": [
+            {
+                "name": "Java",
+                "value": 0
+            },
+            {
+                "name": "C++",
+                "value": 1
+            },
+            {
+                "name": "Go",
+                "value": 2
+            },
+            {
+                "name": "Python",
+                "value": 3
+            }
+        ]
+    },
+    {
+        "text": "以下语言原生支持多线程的是",
+        "ans": 2,
+        "ismulti": false,
+        "items": [
+            {
+                "name": "Java",
+                "value": 0
+            },
+            {
+                "name": "C++",
+                "value": 1
+            },
+            {
+                "name": "Go",
+                "value": 2
+            },
+            {
+                "name": "Python",
+                "value": 3
+            }
+        ]
+    },
+    {
+        "text": "以下语言原生支持多线程的是",
+        "ans": 2,
+        "ismulti": false,
+        "items": [
+            {
+                "name": "Java",
+                "value": 0
+            },
+            {
+                "name": "C++",
+                "value": 1
+            },
+            {
+                "name": "Go",
+                "value": 2
+            },
+            {
+                "name": "Python",
+                "value": 3
+            }
+        ]
+    }
+]
