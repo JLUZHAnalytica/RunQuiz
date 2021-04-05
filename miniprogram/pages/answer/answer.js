@@ -12,11 +12,13 @@ Page({
     queryResult: '',
     nickName: '',
     finished: false,
+    checked: false,
 
     formData: {},
     quiz: {
       text: "这是一道题目的题干",
       ans: 0,
+      score: 10,
       ismulti: false,
       items: [{
           name: '这是选项 0 选我就对了',
@@ -57,24 +59,60 @@ Page({
   },
 
   getQuiz() {
-    db.collection('quiz').aggregate().sample({
-        size: 1
+    db.collection('Questions').aggregate().sample({
+        size: 10
       }).end()
       .then(res => {
-        console.log(res.list[0]);
+        console.log(res.list);
         this.setData({
-          quiz: res.list[0]
+          questions: res.list
         })
       })
   },
 
 
-  submitForm() {
+  submitForm: function () {
+    // 待优化，展示答案时不跳转到下一页
     console.log(this.data.formData)
+    if(this.data.formData.radio == this.data.quiz.ans){
+      wx.showModal({
+        title: '恭喜🎉',
+        content: '回答正确，请进入下一题',
+        showCancel: false
+      })
+      app.globalData.score+=this.data.quiz.score
+    }
+    else
+    {
+      wx.showModal({
+        title: '回答错误，正确答案是：',
+        confirmText: '下一题',
+        content: this.data.quiz.items[this.data.quiz.ans].name,
+        showCancel: false
+      })
+    }
+    console.log(app.globalData.score)
     this.setData({
-      finished: true
+      finished: false,
+      step: this.data.step + 1
     })
-    console.log(this.data.finished)
+
+    
+    if (this.data.step>10) 
+    {
+        const pages = getCurrentPages()
+        if (pages.length === 2) {
+          wx.navigateBack()
+        } else if (pages.length === 1) {
+          wx.redirectTo({
+            url: '../index/index',
+          })
+        } else {
+          wx.reLaunch({
+            url: '../index/index',
+          })
+        }
+    }
   },
 
   radioChange: function (e) {
@@ -89,18 +127,11 @@ Page({
       radioItems: radioItems,
       [`formData.radio`]: e.detail.value
     });
+
   },
 
 
-  nextStep: function () {
-    // 在第一步，需检查是否有 openid，如无需获取
-    
-      this.setData({
-        finished: false,
-        step: this.data.step + 1
-      })
-    
-  },
+
 
   prevStep: function () {
     this.setData({
@@ -108,19 +139,6 @@ Page({
     })
   },
 
-  goHome: function () {
-    const pages = getCurrentPages()
-    if (pages.length === 2) {
-      wx.navigateBack()
-    } else if (pages.length === 1) {
-      wx.redirectTo({
-        url: '../index/index',
-      })
-    } else {
-      wx.reLaunch({
-        url: '../index/index',
-      })
-    }
-  }
+  
 
 })

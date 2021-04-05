@@ -19,6 +19,7 @@ App({
       // nickName: 'Yokey 筱',
       // hasUserInfo: true,
       // openid: 'oaqP65SeHpQgT1H75oxGDjUL3Rwg',
+      score: 0,
     }
   },
 })

@@ -31,11 +31,4 @@
       <button class="weui-btn" type="primary" bindtap="submitForm">确定</button>
     </view>
   </view>
-
-
-  <view class="guide">
-    <div class="nav">
-      <button class="next" size="mini" type="default" bindtap="nextStep" disabled='{{ !finished }}'>下一题</button>
-    </div>
-  </view>
 </view>

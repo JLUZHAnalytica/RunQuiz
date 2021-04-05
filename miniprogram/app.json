@@ -4,9 +4,9 @@
     "weui": true
   },
   "pages": [
+    "pages/answer/answer",
     "pages/index/index",
-    "pages/answer/answer"
-
+    "pages/summary/summary"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
