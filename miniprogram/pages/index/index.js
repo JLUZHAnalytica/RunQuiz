@@ -9,32 +9,32 @@ Page({
     openid: "",
   },
 
-  onLoad: function() {
-      if(app.globalData.hasUserInfo){
-        this.setData({
-          nickName: app.globalData.nickName,
-          avatarUrl: app.globalData.avatarUrl,
-          openid: app.globalData.openid,
-          hasUserInfo: true,
-        })
-      }
-      
-
-      wx.getSetting({
-        success(res) {
-          if (!res.authSetting['scope.werun']) {
-            wx.authorize({
-              scope: 'scope.werun',
-            })
-
-          }
-        }
+  onLoad: function () {
+    if (app.globalData.hasUserInfo) {
+      this.setData({
+        nickName: app.globalData.nickName,
+        avatarUrl: app.globalData.avatarUrl,
+        openid: app.globalData.openid,
+        hasUserInfo: true,
       })
+    }
+
+
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.werun']) {
+          wx.authorize({
+            scope: 'scope.werun',
+          })
+
+        }
+      }
+    })
 
   },
 
   getUserProfile(e) {
-    
+
     // 调用云函数
     wx.cloud.callFunction({
       name: 'login',
@@ -60,30 +60,23 @@ Page({
         wx.setStorageSync('hasUserInfo', true)
         wx.setStorageSync('avatarUrl', res.userInfo.avatarUrl)
         wx.setStorageSync('nickName', res.userInfo.nickName)
-        app.globalData.avatarUrl=res.userInfo.avatarUrl
-        app.globalData.nickName=res.userInfo.nickName
-        app.globalData.hasUserInfo=true
+        app.globalData.avatarUrl = res.userInfo.avatarUrl
+        app.globalData.nickName = res.userInfo.nickName
+        app.globalData.hasUserInfo = true
       }
-      
+
     })
-    
+
   },
 
-  onGetUserInfo: function(e) {
-    if (!this.data.logged && e.detail.userInfo) {
-      this.setData({
-        logged: true,
-        avatarUrl: e.detail.userInfo.avatarUrl,
-        userInfo: e.detail.userInfo,
-        hasUserInfo: true,
-      })
-    }
+  onSeeBrief: function(i)  {
+    console.log("查看第", i+1, "个打卡点的信息")
   },
 
   onScanQRCode() {
     wx.scanCode({
       onlyFromCamera: true,
-      success (res) {
+      success(res) {
         console.log(res)
       }
     })

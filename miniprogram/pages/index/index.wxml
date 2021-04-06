@@ -28,26 +28,29 @@
 
   <view class="page__bd">
     <mp-cells title="请扫码后完成以下任务">
-      <mp-cell link hover url="../answer/answer" wx:for="{{[1, 2]}}" wx:for-item="i">
+
+      <mp-cell>
+        <view style="display: inline-block; vertical-align: middle">
+          <mp-icon icon="done" color="green" size="{{20}}"></mp-icon>
+          起点
+        </view>
+        <mp-badge style="margin-left: 10px;" content="已扫码" />
+      </mp-cell>
+
+      <mp-cell link hover bindtap="onSeeBrief(i)" wx:for="{{[1, 2]}}" wx:for-item="i">
         <view style="display: inline-block; vertical-align: middle">
           <mp-icon icon="done2" color="green" size="{{20}}"></mp-icon>
-          打卡点 {{i}}
+          折返点 {{i}}
         </view>
         <mp-badge style="margin-left: 10px;" content="已完成" />
       </mp-cell>
-      <mp-cell link>
-        <view style="display: inline-block; vertical-align: middle">
-          <mp-icon icon="done" color="green" size="{{20}}"></mp-icon>
-          打卡点 B
-        </view>
-        <mp-badge style="margin-left: 10px;" content="需答题" />
-      </mp-cell>
-      <mp-cell link>
+
+      <mp-cell>
         <view style="display: inline-block; vertical-align: middle">
           <mp-icon icon="close" color="red" size="{{20}}"></mp-icon>
-          打卡点 C
+          终点
         </view>
-        <mp-badge style="margin-left: 10px;" content="未开启" />
+        <mp-badge style="margin-left: 10px;" content="未扫码" />
       </mp-cell>
     </mp-cells>
   </view>

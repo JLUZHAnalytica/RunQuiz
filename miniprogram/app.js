@@ -19,7 +19,7 @@ App({
       nickName: wx.getStorageSync('nickName'),
       hasUserInfo: wx.getStorageSync('hasUserInfo'),
       openid: wx.getStorageSync('openid'),
-      score: 0,
+      score: wx.getStorageSync('score'),
     }
   },
 })
