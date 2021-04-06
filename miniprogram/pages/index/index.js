@@ -3,36 +3,22 @@ const app = getApp()
 
 Page({
   data: {
-    avatarUrl:"",//存头像
-    nickName: "",//存用户名
-    takeSession: false,
-    requestResult: '',
+    avatarUrl: "", //存头像链接
+    nickName: "", //存用户名
     hasUserInfo: false,
+    openid: "",
   },
 
   onLoad: function() {
-
-      let nickName = wx.getStorageSync('nickName'),
-        avater = wx.getStorageSync('avatarUrl');
-      if(nickName){
+      if(app.globalData.hasUserInfo){
         this.setData({
-          nickName: nickName,
-          avatarUrl: avater,
+          nickName: app.globalData.nickName,
+          avatarUrl: app.globalData.avatarUrl,
+          openid: app.globalData.openid,
           hasUserInfo: true,
         })
       }
-      // 调用云函数
-      wx.cloud.callFunction({
-        name: 'login',
-        data: {},
-        success: res => {
-          console.log('[云函数] [login] user openid: ', res.result.openid)
-          app.globalData.openid = res.result.openid
-        },
-        fail: err => {
-          console.error('[云函数] [login] 调用失败', err)
-        }
-      })
+      
 
       wx.getSetting({
         success(res) {
@@ -40,6 +26,7 @@ Page({
             wx.authorize({
               scope: 'scope.werun',
             })
+
           }
         }
       })
@@ -47,7 +34,21 @@ Page({
   },
 
   getUserProfile(e) {
-    // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+    
+    // 调用云函数
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {},
+      success: res => {
+        console.log('[云函数] [login] user openid: ', res.result.openid)
+        app.globalData.openid = res.result.openid
+        wx.setStorageSync('openid', res.result.openid)
+      },
+      fail: err => {
+        console.error('[云函数] [login] 调用失败', err)
+      }
+    })
+
     wx.getUserProfile({
       desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
@@ -56,11 +57,12 @@ Page({
           nickName: res.userInfo.nickName,
           hasUserInfo: true,
         })
+        wx.setStorageSync('hasUserInfo', true)
         wx.setStorageSync('avatarUrl', res.userInfo.avatarUrl)
         wx.setStorageSync('nickName', res.userInfo.nickName)
-        // app.globalData.avatarUrl=res.userInfo.avatarUrl
-        // app.globalData.nickName=res.userInfo.nickName
-        // app.globalData.hasUserInfo=true
+        app.globalData.avatarUrl=res.userInfo.avatarUrl
+        app.globalData.nickName=res.userInfo.nickName
+        app.globalData.hasUserInfo=true
       }
       
     })
