@@ -69,8 +69,8 @@ Page({
 
   },
 
-  onSeeBrief: function(i)  {
-    console.log("查看第", i+1, "个打卡点的信息")
+  onSeeBrief: function(e)  {
+    console.log(e.target.id)
   },
 
   onScanQRCode() {

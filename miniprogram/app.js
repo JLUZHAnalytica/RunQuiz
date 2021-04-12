@@ -19,7 +19,7 @@ App({
       nickName: wx.getStorageSync('nickName'),
       hasUserInfo: wx.getStorageSync('hasUserInfo'),
       openid: wx.getStorageSync('openid'),
-      score: wx.getStorageSync('score'),
+      record: wx.getStorageSync('record'), // 用户在每个时间点打卡的信息
     }
   },
 })

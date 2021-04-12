@@ -37,7 +37,7 @@
         <mp-badge style="margin-left: 10px;" content="已扫码" />
       </mp-cell>
 
-      <mp-cell link hover bindtap="onSeeBrief(i)" wx:for="{{[1, 2]}}" wx:for-item="i">
+      <mp-cell link hover bindtap="onSeeBrief" wx:for="{{[1, 2]}}" wx:for-item="i" id="zfd{{i}}">
         <view style="display: inline-block; vertical-align: middle">
           <mp-icon icon="done2" color="green" size="{{20}}"></mp-icon>
           折返点 {{i}}
@@ -56,7 +56,7 @@
   </view>
 
 
-  <!-- 操作数据库 -->
+
   <view class="uploader">
     <navigator url="../answer/answer" open-type="navigate" class="uploader-text">
       <text>查看汇总</text>
