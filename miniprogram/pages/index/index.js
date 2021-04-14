@@ -20,14 +20,17 @@ Page({
     }
 
 
-    wx.getSetting({
-      success(res) {
-        if (!res.authSetting['scope.werun']) {
-          wx.authorize({
-            scope: 'scope.werun',
+    wx.getSetting().then(res=>{
+      if (!res.authSetting['scope.werun']) {
+        wx.authorize({
+          scope: 'scope.werun',
+        }).catch(err=>{
+          wx.showModal({
+            title: '读取微信运动数据失败',
+            content: '请在小程序右上角[设置]中开启授权'
           })
 
-        }
+        })
       }
     })
 
@@ -74,12 +77,43 @@ Page({
   },
 
   onScanQRCode() {
+    let that = this;
     wx.scanCode({
       onlyFromCamera: true,
       success(res) {
         console.log(res)
+        that.getUserRun()
+      }
+    })
+  },
+
+  // 读取用户的微信运动数据
+  getUserRun() {
+    wx.getWeRunData({
+      success: (result) => {
+        wx.cloud.callFunction({
+          name: 'login',
+          data: {
+            weRunData: wx.cloud.CloudID(result.cloudID),
+            obj: {
+              shareInfo: wx.cloud.CloudID(result.cloudID)
+            }
+          }
+        }).then(res=>{
+          console.log(res);
+          let step = res.result.event.weRunData.data.stepInfoList[30].step;
+          wx.showToast({
+            title: "得到的今日步数："+step,
+            icon: 'none'
+          })
+        })
+      },
+      fail: (error) => {
+        wx.showModal({
+          title: '读取微信运动数据失败',
+          content: '请在小程序右上角[设置]中开启授权'
+        })
       }
     })
   }
-
 })
