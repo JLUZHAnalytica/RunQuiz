@@ -5,8 +5,7 @@
   },
   "pages": [
     "pages/index/index",
-    "pages/summary/summary",
-    "pages/answer/answer"
+    "pages/summary/summary"
 
   ],
   "window": {

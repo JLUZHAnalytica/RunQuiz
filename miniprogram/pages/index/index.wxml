@@ -58,7 +58,7 @@
 
 
   <view class="uploader">
-    <navigator url="../answer/answer" open-type="navigate" class="uploader-text">
+    <navigator url="../summary/summary" open-type="navigate" class="uploader-text">
       <text>查看汇总</text>
     </navigator>
   </view>
