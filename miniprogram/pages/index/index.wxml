@@ -9,8 +9,12 @@
     <block wx:else>
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{avatarUrl}}" mode="cover"></image>
       <text class="userinfo-nickname">{{nickName}}</text>
+      <picker wx:if="{{hasteaminfo}}" class="pick" bindchange="bindPickerChange" value="{{teamIndex}}" range="{{allTeams}}">{{team}}</picker>
+      <picker wx:else class="pick" bindchange="bindPickerChange" value="{{teamIndex}}" range="{{allTeams}}">请点击选择所属团队</picker>
+      <!-- <button class="mini-btn" type="primary" size="mini" bindtap="">请点击选择团队</button> -->
     </block>
   </view>
+
   <view>
     <block wx:if="{{hasUserInfo}}">
       <button type="primary" plain="true" class="main-bt" bindtap="onScanQRCode">
@@ -35,8 +39,8 @@
           <mp-icon icon="close" color="red" size="{{20}}" wx:else></mp-icon>
           起点
         </view>
-        <mp-badge style="margin-left: 10px;" content="已扫码" wx:if="{{icon[0]}}"/>
-        <mp-badge style="margin-left: 10px;" content="未扫码" wx:else/>
+        <mp-badge style="margin-left: 10px;" content="已扫码" wx:if="{{icon[0]}}" />
+        <mp-badge style="margin-left: 10px;" content="未扫码" wx:else />
       </mp-cell>
 
       <mp-cell link hover bindtap="onSeeBrief" wx:for="{{[1, 2, 3]}}" wx:for-item="i" id="zfd{{i}}">
@@ -45,8 +49,8 @@
           <mp-icon icon="close" color="red" size="{{20}}" wx:else></mp-icon>
           折返点 {{i}}
         </view>
-        <mp-badge style="margin-left: 10px;" content="已完成" wx:if="{{icon[i]}}"/>
-        <mp-badge style="margin-left: 10px;" content="未完成" wx:else/>
+        <mp-badge style="margin-left: 10px;" content="已完成" wx:if="{{icon[i]}}" />
+        <mp-badge style="margin-left: 10px;" content="未完成" wx:else />
       </mp-cell>
 
       <mp-cell>
@@ -55,8 +59,8 @@
           <mp-icon icon="close" color="red" size="{{20}}" wx:else></mp-icon>
           终点
         </view>
-        <mp-badge style="margin-left: 10px;" content="已扫码" wx:if="{{icon[4]}}"/>
-        <mp-badge style="margin-left: 10px;" content="未扫码" wx:else/>
+        <mp-badge style="margin-left: 10px;" content="已扫码" wx:if="{{icon[4]}}" />
+        <mp-badge style="margin-left: 10px;" content="未扫码" wx:else />
       </mp-cell>
     </mp-cells>
   </view>

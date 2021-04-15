@@ -20,6 +20,8 @@ App({
       hasUserInfo: wx.getStorageSync('hasUserInfo'),
       openid: wx.getStorageSync('openid'),
       record: wx.getStorageSync('record'), // 用户在每个时间点打卡的信息
+      team: wx.getStorageSync('team'),
+      hasteaminfo: wx.getStorageSync('hasteaminfo')
     }
   },
 })

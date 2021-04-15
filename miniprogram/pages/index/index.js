@@ -7,7 +7,10 @@ Page({
     nickName: "", //存用户名
     hasUserInfo: false,
     openid: "",
-    icon: [false,false,false,false,false]
+    team: "",
+    hasteaminfo: false,
+    icon: [false,false,false,false,false],
+    allTeams: ["阿里云大数据应用学院", "计算机学院"]
   },
 
   onLoad: function () {
@@ -18,8 +21,14 @@ Page({
         openid: app.globalData.openid,
         hasUserInfo: true,
       })
+      if (app.globalData.hasteaminfo) {
+        this.setData({
+          team: app.globalData.team,
+          hasteaminfo: true
+        })
+      }
     }
-
+    console.log("team:", this.data.team)
 
     wx.getSetting().then(res=>{
       if (!res.authSetting['scope.werun']) {
@@ -35,6 +44,15 @@ Page({
       }
     })
 
+  },
+
+  bindPickerChange: function(e) {
+    this.setData({
+      team: this.data.allTeams[e.detail.value],
+      hasteaminfo: true
+    })
+    wx.setStorageSync('team', this.data.team)
+    wx.setStorageSync('hasteaminfo', true)
   },
 
   getUserProfile(e) {
