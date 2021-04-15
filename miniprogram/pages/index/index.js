@@ -7,6 +7,7 @@ Page({
     nickName: "", //存用户名
     hasUserInfo: false,
     openid: "",
+    icon: [false,false,false,false,false]
   },
 
   onLoad: function () {
@@ -81,8 +82,54 @@ Page({
     wx.scanCode({
       onlyFromCamera: true,
       success(res) {
-        console.log(res)
-        that.getUserRun()
+        console.log(res.result);
+        if (res.result == 'start') {
+          that.setData({
+            'icon[0]': true
+          })
+          wx.showToast({
+            title: '扫码成功',
+          })
+        } else if (res.result == 'zfd1') {
+          that.setData({
+            'icon[1]': true
+          })
+          wx.showToast({
+            title: '扫码成功',
+          })
+        } else if (res.result == 'zfd2') {
+          that.setData({
+            'icon[2]': true
+          })
+          wx.showToast({
+            title: '扫码成功',
+          })
+        } else if (res.result == 'zfd3') {
+          that.setData({
+            'icon[3]': true
+          })
+          wx.showToast({
+            title: '扫码成功',
+          })
+        } else if (res.result == 'end') {
+          that.setData({
+            'icon[4]': true
+          })
+          wx.showToast({
+            title: '扫码成功',
+          })
+        } else {
+          wx.showToast({
+            title: '非本项目二维码，请重新扫码',
+            icon: 'none'
+          })
+        }
+      },
+      fail(err) {
+        wx.showToast({
+          title: '扫码失败',
+          icon: 'none'
+        })
       }
     })
   },

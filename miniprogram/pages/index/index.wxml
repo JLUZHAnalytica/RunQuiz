@@ -31,26 +31,32 @@
 
       <mp-cell>
         <view style="display: inline-block; vertical-align: middle">
-          <mp-icon icon="done" color="green" size="{{20}}"></mp-icon>
+          <mp-icon icon="done" color="green" size="{{20}}" wx:if="{{icon[0]}}"></mp-icon>
+          <mp-icon icon="close" color="red" size="{{20}}" wx:else></mp-icon>
           起点
         </view>
-        <mp-badge style="margin-left: 10px;" content="已扫码" />
+        <mp-badge style="margin-left: 10px;" content="已扫码" wx:if="{{icon[0]}}"/>
+        <mp-badge style="margin-left: 10px;" content="未扫码" wx:else/>
       </mp-cell>
 
-      <mp-cell link hover bindtap="onSeeBrief" wx:for="{{[1, 2]}}" wx:for-item="i" id="zfd{{i}}">
+      <mp-cell link hover bindtap="onSeeBrief" wx:for="{{[1, 2, 3]}}" wx:for-item="i" id="zfd{{i}}">
         <view style="display: inline-block; vertical-align: middle">
-          <mp-icon icon="done2" color="green" size="{{20}}"></mp-icon>
+          <mp-icon icon="done2" color="green" size="{{20}}" wx:if="{{icon[i]}}"></mp-icon>
+          <mp-icon icon="close" color="red" size="{{20}}" wx:else></mp-icon>
           折返点 {{i}}
         </view>
-        <mp-badge style="margin-left: 10px;" content="已完成" />
+        <mp-badge style="margin-left: 10px;" content="已完成" wx:if="{{icon[i]}}"/>
+        <mp-badge style="margin-left: 10px;" content="未完成" wx:else/>
       </mp-cell>
 
       <mp-cell>
         <view style="display: inline-block; vertical-align: middle">
-          <mp-icon icon="close" color="red" size="{{20}}"></mp-icon>
+          <mp-icon icon="done" color="green" size="{{20}}" wx:if="{{icon[4]}}"></mp-icon>
+          <mp-icon icon="close" color="red" size="{{20}}" wx:else></mp-icon>
           终点
         </view>
-        <mp-badge style="margin-left: 10px;" content="未扫码" />
+        <mp-badge style="margin-left: 10px;" content="已扫码" wx:if="{{icon[4]}}"/>
+        <mp-badge style="margin-left: 10px;" content="未扫码" wx:else/>
       </mp-cell>
     </mp-cells>
   </view>
