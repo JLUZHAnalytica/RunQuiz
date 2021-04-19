@@ -1,1 +1,66 @@
 /* pages/summary/summary.wxss */
+
+.userinfo {
+  margin-bottom: 10px;
+}
+
+
+.userinfolist {
+  margin: 0%;
+  padding-right: 80rpx;
+  height: 140rpx;
+  width: 100%;
+  background: #fff;
+  border-left: none;
+  border-right: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  transition: all 300ms ease;
+  border-bottom: 2rpx solid rgb(211, 206, 206);
+}
+
+/*分割线样式
+.divLine{
+  background: #E0E3DA;
+  width: 100%;
+  height: 2rpx;
+
+ }
+ /* 分隔线--底部 */
+.divLine {
+  width: 90%;
+  /* 分隔线的长度 */
+  margin: auto;
+  height: 1px;
+  /* 分隔线粗细 */
+  text-align: center;
+  font-size: 24rpx;
+  color: #aaa;
+  background: #ccc;
+  margin-top: 5px;
+  margin-bottom: 22px;
+}
+
+.divLine span {
+  position: relative;
+  top: -8px;
+  background: rgb(245, 243, 243);
+  padding: 0px 10px;
+}
+
+.rank-number {
+  margin-left: 10px;
+}
+
+.userinfo-avatar {
+  border-radius: 15%;
+}
+
+.userinfo-step {
+  position: absolute;
+  right: 0;
+  /* 靠右调节 */
+  margin-right: 20px;
+  color: rgb(29, 201, 66);
+}

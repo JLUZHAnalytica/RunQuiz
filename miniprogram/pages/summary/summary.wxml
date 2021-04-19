@@ -1,21 +1,18 @@
 <!--pages/summary/summary.wxml-->
-
-
-
-
 <view class="userinfo">
-    <block wx:if="{{!hasUserInfo}}">
-      <button type="primary" bindtap="getUserProfile"> 点击获取头像昵称 </button>
-    </block>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{avatarUrl}}" mode="cover"></image>
+    <block wx:if="{{hasUserInfo}}">
+      <text class="rank-number">{{number}}</text>
+      <image class="userinfo-avatar" src="{{avatarUrl}}" mode="cover"></image>
       <text class="userinfo-nickname">{{nickName}}</text>
+      <text class="userinfo-step">{{step}}</text>
     </block>
 </view>
-<mp-cells ext-class="my-cells" title="带说明的列表项">
-    <mp-cell value="标题文字" footer="说明文字"></mp-cell>
-    <mp-cell>
-        <view>标题文字（使用slot）</view>
-        <view slot="footer">说明文字</view>
-    </mp-cell>
-</mp-cells>
+<view class="userstep" wx:for="{{usersort}}">
+  <view class="userinfolist" >
+    <text class="rank-number">{{index+1}}</text>
+    <image class="userinfo-avatar" src="{{item.avatarUrl}}" mode="cover"></image>
+    <text class="userinfo-nickname">{{item.nickName}}</text>
+    <text class="userinfo-step">{{item.record[item.record.length-1].steps}}</text>
+  </view>
+</view> 
+<view class="divLine"><span>仅展示前10名</span></view> 
