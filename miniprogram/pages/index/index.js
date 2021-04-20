@@ -1,5 +1,6 @@
 //index.js
 const app = getApp()
+const db = wx.cloud.database()
 
 Page({
   data: {
@@ -9,8 +10,8 @@ Page({
     openid: "",
     team: "",
     hasteaminfo: false,
-    icon: [false,false,false,false,false],
-    allTeams: ["阿里云大数据应用学院", "计算机学院"]
+    icon: [false, false, false, false, false],
+    allTeams: ["美术与设计学院", "工商管理学院", "电子信息工程学院", "计算机学院", "旅游学院", "机械工程学院", "文学院", "公共管理学院", "外国语学院", "药学与食品科学学院", "建筑与城乡规划学院", "金融与贸易学院", "物流管理与工程学院", "音乐舞蹈学院", "公共外语教育学院", "马克思主义学院", "国际教育交流学院", "健康学院", "创新创业学院", "航空工程学院", "化工与新能源材料学院", "公共基础与应用统计学院", "体育科学学院", "阿里云大数据应用学院", "继续教育学院"]
   },
 
   onLoad: function () {
@@ -30,11 +31,11 @@ Page({
     }
     console.log("team:", this.data.team)
 
-    wx.getSetting().then(res=>{
+    wx.getSetting().then(res => {
       if (!res.authSetting['scope.werun']) {
         wx.authorize({
           scope: 'scope.werun',
-        }).catch(err=>{
+        }).catch(err => {
           wx.showModal({
             title: '读取微信运动数据失败',
             content: '请在小程序右上角[设置]中开启授权'
@@ -46,17 +47,22 @@ Page({
 
   },
 
-  bindPickerChange: function(e) {
+  bindPickerChange: function (e) {
     this.setData({
       team: this.data.allTeams[e.detail.value],
       hasteaminfo: true
     })
     wx.setStorageSync('team', this.data.team)
     wx.setStorageSync('hasteaminfo', true)
+    this.modifyData(wx.getStorageSync('_id'),{
+      data: {
+        team: this.data.team
+      }
+    })
   },
 
   getUserProfile(e) {
-
+    let that = this;
     // 调用云函数
     wx.cloud.callFunction({
       name: 'login',
@@ -85,13 +91,21 @@ Page({
         app.globalData.avatarUrl = res.userInfo.avatarUrl
         app.globalData.nickName = res.userInfo.nickName
         app.globalData.hasUserInfo = true
+        that.insertData({
+          data: {
+            nickName: res.userInfo.nickName,
+            avatarUrl: res.userInfo.avatarUrl,
+            team: '',
+            record: []
+          }
+        })
       }
 
     })
 
   },
 
-  onSeeBrief: function(e)  {
+  onSeeBrief: function (e) {
     console.log(e.target.id)
   },
 
@@ -108,6 +122,12 @@ Page({
           wx.showToast({
             title: '扫码成功',
           })
+          that.modifyData(wx.getStorageSync('_id'),{data:{
+            record: db.command.push([{
+              point: '起点',
+              time: db.serverDate()
+            }])
+          }})
         } else if (res.result == 'zfd1') {
           that.setData({
             'icon[1]': true
@@ -115,6 +135,12 @@ Page({
           wx.showToast({
             title: '扫码成功',
           })
+          that.modifyData(wx.getStorageSync('_id'),{data:{
+            record: db.command.push([{
+              point: '折返点1',
+              time: db.serverDate()
+            }])
+          }})
         } else if (res.result == 'zfd2') {
           that.setData({
             'icon[2]': true
@@ -122,6 +148,12 @@ Page({
           wx.showToast({
             title: '扫码成功',
           })
+          that.modifyData(wx.getStorageSync('_id'),{data:{
+            record: db.command.push([{
+              point: '折返点2',
+              time: db.serverDate()
+            }])
+          }})
         } else if (res.result == 'zfd3') {
           that.setData({
             'icon[3]': true
@@ -129,6 +161,12 @@ Page({
           wx.showToast({
             title: '扫码成功',
           })
+          that.modifyData(wx.getStorageSync('_id'),{data:{
+            record: db.command.push([{
+              point: '折返点3',
+              time: db.serverDate()
+            }])
+          }})
         } else if (res.result == 'end') {
           that.setData({
             'icon[4]': true
@@ -136,6 +174,12 @@ Page({
           wx.showToast({
             title: '扫码成功',
           })
+          that.modifyData(wx.getStorageSync('_id'),{data:{
+            record: db.command.push([{
+              point: '终点',
+              time: db.serverDate()
+            }])
+          }})
         } else {
           wx.showToast({
             title: '非本项目二维码，请重新扫码',
@@ -164,11 +208,11 @@ Page({
               shareInfo: wx.cloud.CloudID(result.cloudID)
             }
           }
-        }).then(res=>{
+        }).then(res => {
           console.log(res);
           let step = res.result.event.weRunData.data.stepInfoList[30].step;
           wx.showToast({
-            title: "得到的今日步数："+step,
+            title: "得到的今日步数：" + step,
             icon: 'none'
           })
         })
@@ -180,5 +224,18 @@ Page({
         })
       }
     })
+  },
+
+  // 增加数据到数据库
+  insertData(object) {
+    db.collection('users').add(object).then(res=>{
+      console.log('成功增'+res);
+      wx.setStorageSync('_id', res._id)
+    }).catch(err=>{console.log('失败增'+err);})
+  },
+
+  // 修改数据到数据库
+  modifyData(id,object) {
+    db.collection('users').doc(id).update(object).then(res=>{console.log('成功修改'+res);}).catch(err=>{console.log('失败修改'+err);})
   }
 })

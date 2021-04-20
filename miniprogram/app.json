@@ -3,6 +3,11 @@
     "kbone": true,
     "weui": true
   },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "位置信息权限"
+    }
+  },
   "pages": [
     "pages/index/index",
     "pages/summary/summary"
