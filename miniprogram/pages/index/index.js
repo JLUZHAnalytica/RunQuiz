@@ -1,7 +1,7 @@
 //index.js
 const app = getApp()
 const db = wx.cloud.database()
-
+let stepIndex = -1;
 Page({
   data: {
     avatarUrl: "", //存头像链接
@@ -54,7 +54,7 @@ Page({
     })
     wx.setStorageSync('team', this.data.team)
     wx.setStorageSync('hasteaminfo', true)
-    this.modifyData(wx.getStorageSync('_id'),{
+    this.modifyData(wx.getStorageSync('_id'), {
       data: {
         team: this.data.team
       }
@@ -122,12 +122,18 @@ Page({
           wx.showToast({
             title: '扫码成功',
           })
-          that.modifyData(wx.getStorageSync('_id'),{data:{
-            record: db.command.push([{
-              point: '起点',
-              time: db.serverDate()
-            }])
-          }})
+          that.getUserRun();
+          setTimeout(() => {
+            that.modifyData(wx.getStorageSync('_id'), {
+              data: {
+                record: db.command.push([{
+                  point: '起点',
+                  time: db.serverDate(),
+                  steps: stepIndex
+                }])
+              }
+            })
+          }, 5 * 1000);
         } else if (res.result == 'zfd1') {
           that.setData({
             'icon[1]': true
@@ -135,12 +141,18 @@ Page({
           wx.showToast({
             title: '扫码成功',
           })
-          that.modifyData(wx.getStorageSync('_id'),{data:{
-            record: db.command.push([{
-              point: '折返点1',
-              time: db.serverDate()
-            }])
-          }})
+          that.getUserRun();
+          setTimeout(() => {
+            that.modifyData(wx.getStorageSync('_id'), {
+              data: {
+                record: db.command.push([{
+                  point: '折返点1',
+                  time: db.serverDate(),
+                  steps: stepIndex
+                }])
+              }
+            })
+          }, 5 * 1000);
         } else if (res.result == 'zfd2') {
           that.setData({
             'icon[2]': true
@@ -148,12 +160,18 @@ Page({
           wx.showToast({
             title: '扫码成功',
           })
-          that.modifyData(wx.getStorageSync('_id'),{data:{
-            record: db.command.push([{
-              point: '折返点2',
-              time: db.serverDate()
-            }])
-          }})
+          that.getUserRun();
+          setTimeout(() => {
+            that.modifyData(wx.getStorageSync('_id'), {
+              data: {
+                record: db.command.push([{
+                  point: '折返点2',
+                  time: db.serverDate(),
+                  steps: stepIndex
+                }])
+              }
+            })
+          }, 5 * 1000);
         } else if (res.result == 'zfd3') {
           that.setData({
             'icon[3]': true
@@ -161,12 +179,18 @@ Page({
           wx.showToast({
             title: '扫码成功',
           })
-          that.modifyData(wx.getStorageSync('_id'),{data:{
-            record: db.command.push([{
-              point: '折返点3',
-              time: db.serverDate()
-            }])
-          }})
+          that.getUserRun();
+          setTimeout(() => {
+            that.modifyData(wx.getStorageSync('_id'), {
+              data: {
+                record: db.command.push([{
+                  point: '折返点3',
+                  time: db.serverDate(),
+                  steps: stepIndex
+                }])
+              }
+            })
+          }, 5 * 1000);
         } else if (res.result == 'end') {
           that.setData({
             'icon[4]': true
@@ -174,12 +198,18 @@ Page({
           wx.showToast({
             title: '扫码成功',
           })
-          that.modifyData(wx.getStorageSync('_id'),{data:{
-            record: db.command.push([{
-              point: '终点',
-              time: db.serverDate()
-            }])
-          }})
+          that.getUserRun();
+          setTimeout(() => {
+            that.modifyData(wx.getStorageSync('_id'), {
+              data: {
+                record: db.command.push([{
+                  point: '终点',
+                  time: db.serverDate(),
+                  steps: stepIndex
+                }])
+              }
+            })
+          }, 5 * 1000);
         } else {
           wx.showToast({
             title: '非本项目二维码，请重新扫码',
@@ -215,6 +245,7 @@ Page({
             title: "得到的今日步数：" + step,
             icon: 'none'
           })
+          stepIndex = step;
         })
       },
       fail: (error) => {
@@ -228,14 +259,20 @@ Page({
 
   // 增加数据到数据库
   insertData(object) {
-    db.collection('users').add(object).then(res=>{
-      console.log('成功增'+res);
+    db.collection('users').add(object).then(res => {
+      console.log('成功增' + res);
       wx.setStorageSync('_id', res._id)
-    }).catch(err=>{console.log('失败增'+err);})
+    }).catch(err => {
+      console.log('失败增' + err);
+    })
   },
 
   // 修改数据到数据库
-  modifyData(id,object) {
-    db.collection('users').doc(id).update(object).then(res=>{console.log('成功修改'+res);}).catch(err=>{console.log('失败修改'+err);})
+  modifyData(id, object) {
+    db.collection('users').doc(id).update(object).then(res => {
+      console.log('成功修改' + res);
+    }).catch(err => {
+      console.log('失败修改' + err);
+    })
   }
 })
