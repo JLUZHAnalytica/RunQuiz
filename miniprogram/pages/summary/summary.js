@@ -14,8 +14,8 @@ Page({
     hasUserInfo: true,
     openid: "",
     step:"",//存用户微信步数
-    users:{},
-    usersort:{},
+    users:[],
+    usersort:[],
   },
   /**
    * 生命周期函数--监听页面加载
@@ -29,74 +29,50 @@ Page({
         hasUserInfo: true,
       })
       }
-    wx.cloud.init({
-      env: 'cloud1-5gzddcqr4caf5f24',
-    })
-/*    wx.cloud.callFunction({
-      name:'getusers',
-      data:{},
-      success:res=>{
-
-      }
-    })
-*/
 
     let that=this;
-    db.collection('users').count().then(async res =>{    
-      let total = res.total;
-      // 计算需分几次取
-      const batchTimes = Math.ceil(total / MAX_LIMIT)
-      // 承载所有读操作的 promise 的数组
-      if(total>20){
-        for (let i = 0; i < batchTimes; i++) {
-          await db.collection('users').skip(i * MAX_LIMIT).limit(MAX_LIMIT).get().then(async res => {
-            let new_data = res.data
-            let old_data=that.data.users
-          })
-        }
-        that.setData({
-          users:that.old_data.concat(new_data)
-        })
-       console.log(that.data.users[0])
-       for(let i=0;i<that.data.users.length;i++){
-         if(nickName==that.data.users[i].nickName){
-            number=i
-            step==that.data.users[i].record[that.data.users[i].record.length-1].steps
-         }else{
-           step=0
-           number=0
-         }
-       }
-       var usersort = that.data.users.sort(function sortstep(a,b){return a.record[a.record.length-1].steps - b.record[a.record.length-1].steps}).limit(10)
-      }else{
-        await db.collection('users').orderBy("record[record.length-1].steps",'desc').limit(10).get({
-          success:res=>{
-            console.log("sucess",res)
-            this.setData({
-              usersort:res.data
+    //调用云函数
+      wx.cloud.callFunction({
+        name:'getALLdata',
+        data:{},     
+        success: res =>{
+          console.log('',res)
+          //步数排序
+          var users=res.result.data.sort(function sortNumber(a,b){
+            if(a.record!=0&&b.record.length!=0){
+              return b.record[b.record.length-1].steps - a.record[a.record.length-1].steps}
+            else if(a.record!=0){
+              var x = {
+                steps:0,
+              };
+              b.record.steps=-1
+              return b.record.steps - a.record[a.record.length-1].steps}
+            else{
+              var y={
+                steps:0,
+              };
+              a.record.steps=-1
+              return b.record[b.record.length-1].steps - a.record.steps}
             })
-          },
-          fail:err=>{
-            console.error("error",err)
-          }
-        })
-      }
-    })
-/*    db.collection('users')
-      .orderBy("record[-1].steps",'desc')
-      .limit(10)
-      .get({
-        success: res => { 
-          console.log("请求成功",res);   
-          this.setData({
-            users: res.data
-          })
+            for(let i=0;i<users.length;i++){
+              if(app.globalData.openid==users[i]._openid&&app.globalData.nickName==users[i].nickName){
+                this.setData({
+                  number:i+1,
+                  step:users[i].record[users[i].record.length-1].steps
+                })
+              }
+            }
+            //console.log(users)
+            //取前10条
+            users = users.slice(0, 10) 
+          that.setData({
+            usersort:users
+            })
         },
-        fail(res){
-          console.log("请求失败",res);
+        fail: err => {
+          console.error('调用失败', err)
         }
-      })
- */     
+    })
   },
 
   /**
@@ -133,7 +109,9 @@ Page({
   onPullDownRefresh: function () {
     console.log('onPullDownRefresh')
     wx.stopPullDownRefresh({// 下拉复位
-      success: (res) => {},
+      success: (res) => {
+        this.onLoad()
+      },
     })
 
   },

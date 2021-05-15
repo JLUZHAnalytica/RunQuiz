@@ -7,7 +7,7 @@
       <text class="userinfo-step">{{step}}</text>
     </block>
 </view>
-<view class="userstep" wx:for="{{usersort}}">
+<view class="userstep" wx:for="{{usersort}}" wx:key="key">
   <view class="userinfolist" >
     <text class="rank-number">{{index+1}}</text>
     <image class="userinfo-avatar" src="{{item.avatarUrl}}" mode="cover"></image>
