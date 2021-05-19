@@ -3,6 +3,7 @@ const app = getApp()
 const db = wx.cloud.database()
 let stepIndex = -1;
 let len = -1;
+let isYou = [];
 Page({
   data: {
     avatarUrl: "", //存头像链接
@@ -16,6 +17,8 @@ Page({
   },
 
   onLoad: function () {
+    this.findIsYou();
+    console.log(isYou);
     if (app.globalData.hasUserInfo) {
       this.setData({
         nickName: app.globalData.nickName,
@@ -30,7 +33,16 @@ Page({
           hasteaminfo: true
         })
       }
+    } else if (isYou.length) {
+      this.setData({
+        nickName: isYou.nickName,
+        avatarUrl: isYou.avatarUrl,
+        icon: isYou.record,
+        hasUserInfo: true,
+        team: isYou.team
+      })
     }
+
     console.log("team:", this.data.team)
 
     wx.getSetting().then(res => {
@@ -126,6 +138,10 @@ Page({
           })
           wx.setStorageSync('record', that.data.icon)
           that.getUserRun();
+          wx.showLoading({
+            title: '上传中',
+            mask: true
+          })
           setTimeout(() => {
             that.modifyData(wx.getStorageSync('_id'), {
               data: {
@@ -136,6 +152,7 @@ Page({
                 }])
               }
             })
+            wx.hideLoading()
           }, 5 * 1000);
         } else if (res.result == 'zfd1') {
           that.setData({
@@ -146,6 +163,10 @@ Page({
           })
           wx.setStorageSync('record', that.data.icon)
           that.getUserRun();
+          wx.showLoading({
+            title: '上传中',
+            mask: true
+          })
           setTimeout(() => {
             that.modifyData(wx.getStorageSync('_id'), {
               data: {
@@ -156,6 +177,7 @@ Page({
                 }])
               }
             })
+            wx.hideLoading()
           }, 5 * 1000);
         } else if (res.result == 'zfd2') {
           that.setData({
@@ -166,6 +188,10 @@ Page({
           })
           wx.setStorageSync('record', that.data.icon)
           that.getUserRun();
+          wx.showLoading({
+            title: '上传中',
+            mask: true
+          })
           setTimeout(() => {
             that.modifyData(wx.getStorageSync('_id'), {
               data: {
@@ -176,6 +202,7 @@ Page({
                 }])
               }
             })
+            wx.hideLoading()
           }, 5 * 1000);
         } else if (res.result == 'zfd3') {
           that.setData({
@@ -186,6 +213,10 @@ Page({
           })
           wx.setStorageSync('record', that.data.icon)
           that.getUserRun();
+          wx.showLoading({
+            title: '上传中',
+            mask: true
+          })
           setTimeout(() => {
             that.modifyData(wx.getStorageSync('_id'), {
               data: {
@@ -196,6 +227,7 @@ Page({
                 }])
               }
             })
+            wx.hideLoading()
           }, 5 * 1000);
         } else if (res.result == 'end') {
           that.setData({
@@ -206,6 +238,10 @@ Page({
           })
           wx.setStorageSync('record', that.data.icon)
           that.getUserRun();
+          wx.showLoading({
+            title: '上传中',
+            mask: true
+          })
           setTimeout(() => {
             that.modifyData(wx.getStorageSync('_id'), {
               data: {
@@ -216,6 +252,7 @@ Page({
                 }])
               }
             })
+            wx.hideLoading()
           }, 5 * 1000);
         } else {
           wx.showToast({
@@ -248,10 +285,10 @@ Page({
         }).then(res => {
           console.log(res);
           let step = res.result.event.weRunData.data.stepInfoList[30].step;
-          wx.showToast({
-            title: "得到的今日步数：" + step,
-            icon: 'none'
-          })
+          // wx.showToast({
+          //   title: "得到的今日步数：" + step,
+          //   icon: 'none'
+          // })
           stepIndex = step;
         })
       },
@@ -294,8 +331,31 @@ Page({
 
   // 判断record数组容量
   countRecordArray(id) {
-    db.collection('users').doc(id).get().then(res=>{
+    db.collection('users').doc(id).get().then(res => {
       len = res.data.record.length;
+    })
+  },
+
+  // 云函数登录
+  cloudFunctionLogin(){
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {},
+      success: res => {
+        app.globalData.openid = res.result.openid
+        wx.setStorageSync('openid', res.result.openid)
+      }
+    })
+  },
+  // 查找openid对应的记录
+  findIsYou() {
+    this.cloudFunctionLogin();
+    let openid = wx.getStorageSync('openid');
+
+    db.collection('users').where({
+      openid: openid
+    }).get().then(res => {
+      isYou = res.data;
     })
   }
 })
