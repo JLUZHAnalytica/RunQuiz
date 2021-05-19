@@ -42,15 +42,9 @@ Page({
             if(a.record!=0&&b.record.length!=0){
               return b.record[b.record.length-1].steps - a.record[a.record.length-1].steps}
             else if(a.record!=0){
-              var x = {
-                steps:0,
-              };
               b.record.steps=-1
               return b.record.steps - a.record[a.record.length-1].steps}
             else{
-              var y={
-                steps:0,
-              };
               a.record.steps=-1
               return b.record[b.record.length-1].steps - a.record.steps}
             })
