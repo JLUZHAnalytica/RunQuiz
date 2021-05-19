@@ -2,6 +2,7 @@
 const app = getApp()
 const db = wx.cloud.database()
 let stepIndex = -1;
+let len = -1;
 Page({
   data: {
     avatarUrl: "", //存头像链接
@@ -20,6 +21,7 @@ Page({
         nickName: app.globalData.nickName,
         avatarUrl: app.globalData.avatarUrl,
         openid: app.globalData.openid,
+        icon: app.globalData.record,
         hasUserInfo: true,
       })
       if (app.globalData.hasteaminfo) {
@@ -122,6 +124,7 @@ Page({
           wx.showToast({
             title: '扫码成功',
           })
+          wx.setStorageSync('record', that.data.icon)
           that.getUserRun();
           setTimeout(() => {
             that.modifyData(wx.getStorageSync('_id'), {
@@ -141,6 +144,7 @@ Page({
           wx.showToast({
             title: '扫码成功',
           })
+          wx.setStorageSync('record', that.data.icon)
           that.getUserRun();
           setTimeout(() => {
             that.modifyData(wx.getStorageSync('_id'), {
@@ -160,6 +164,7 @@ Page({
           wx.showToast({
             title: '扫码成功',
           })
+          wx.setStorageSync('record', that.data.icon)
           that.getUserRun();
           setTimeout(() => {
             that.modifyData(wx.getStorageSync('_id'), {
@@ -179,6 +184,7 @@ Page({
           wx.showToast({
             title: '扫码成功',
           })
+          wx.setStorageSync('record', that.data.icon)
           that.getUserRun();
           setTimeout(() => {
             that.modifyData(wx.getStorageSync('_id'), {
@@ -198,6 +204,7 @@ Page({
           wx.showToast({
             title: '扫码成功',
           })
+          wx.setStorageSync('record', that.data.icon)
           that.getUserRun();
           setTimeout(() => {
             that.modifyData(wx.getStorageSync('_id'), {
@@ -269,10 +276,26 @@ Page({
 
   // 修改数据到数据库
   modifyData(id, object) {
-    db.collection('users').doc(id).update(object).then(res => {
-      console.log('成功修改' + res);
-    }).catch(err => {
-      console.log('失败修改' + err);
+    this.countRecordArray(id);
+    if (len < 5) {
+      db.collection('users').doc(id).update(object).then(res => {
+        console.log('成功修改' + res);
+        this.countRecordArray(id);
+      }).catch(err => {
+        console.log('失败修改' + err);
+      })
+    } else {
+      wx.showToast({
+        title: '切勿重复打卡',
+        icon: 'none'
+      })
+    }
+  },
+
+  // 判断record数组容量
+  countRecordArray(id) {
+    db.collection('users').doc(id).get().then(res=>{
+      len = res.data.record.length;
     })
   }
 })
