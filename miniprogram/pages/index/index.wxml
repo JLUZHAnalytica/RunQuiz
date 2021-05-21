@@ -4,7 +4,7 @@
   <!-- 用户 openid -->
   <view class="userinfo">
     <block wx:if="{{!hasUserInfo}}">
-      <button type="primary" bindtap="getUserProfile"> 点击获取头像昵称 </button>
+      <button type="primary" bindtap="getUserProfile"> 获取头像昵称 </button>
     </block>
     <block wx:else>
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{avatarUrl}}" mode="cover"></image>
